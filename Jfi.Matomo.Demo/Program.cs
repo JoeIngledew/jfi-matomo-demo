@@ -1,5 +1,7 @@
 using GovUk.Frontend.AspNetCore;
 
+using Jfi.Matomo.Demo.Utils;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,6 +15,8 @@ builder.Services.AddSession(opt =>
     opt.IdleTimeout = TimeSpan.FromHours(20);
     opt.Cookie.IsEssential = true;
 });
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<ISessionService, SessionService>();
 
 var app = builder.Build();
 
