@@ -22,7 +22,14 @@ public class CookiesModel : PageModel
     public IActionResult OnPost()
     {
         if (!string.IsNullOrEmpty(ConsentCookieValue))
-            Response.Cookies.Append(ConsentCookieName, ConsentCookieValue);
+            Response.Cookies.Append(ConsentCookieName, ConsentCookieValue, new CookieOptions
+            {
+                SameSite = SameSiteMode.Strict,
+                HttpOnly = true,
+                Secure = true,
+                MaxAge = TimeSpan.FromDays(1),
+                Expires = DateTime.UtcNow.AddDays(1)
+            });
 
         return Page();
     }
@@ -30,7 +37,14 @@ public class CookiesModel : PageModel
     public IActionResult OnPostAccept()
     {
         // todo - only grant consent on approval if analytics involved
-        Response.Cookies.Append(ConsentCookieName, "accept");
+        Response.Cookies.Append(ConsentCookieName, "accept", new CookieOptions
+        {
+            SameSite = SameSiteMode.Strict,
+            HttpOnly = true,
+            Secure = true,
+            MaxAge = TimeSpan.FromDays(1),
+            Expires = DateTime.UtcNow.AddDays(1)
+        });
         var referrer = Request.Headers.Referer.ToString();
         return Redirect(referrer);
     }
@@ -38,7 +52,14 @@ public class CookiesModel : PageModel
     public IActionResult OnPostReject()
     {
         // todo - only grant consent on approval if analytics involved
-        Response.Cookies.Append(ConsentCookieName, "reject");
+        Response.Cookies.Append(ConsentCookieName, "reject", new CookieOptions
+        {
+            SameSite = SameSiteMode.Strict,
+            HttpOnly = true,
+            Secure = true,
+            MaxAge = TimeSpan.FromDays(1),
+            Expires = DateTime.UtcNow.AddDays(1)
+        });
         var referrer = Request.Headers.Referer.ToString();
         return Redirect(referrer);
     }
