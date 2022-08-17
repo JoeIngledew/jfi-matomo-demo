@@ -1,0 +1,30 @@
+﻿@{
+    var consentCookie = Context.Request.Cookies.FirstOrDefault(x => x.Key == ".Jfi.MatomoDemo.CookieConsent");
+    var showBanner = consentCookie.Value is null;
+}
+@if (showBanner)
+{
+<form method="post" id="cookie-banner-form">
+    <div class="govuk-cookie-banner " data-nosnippet role="region" aria-label="Cookies on this service">
+        <div class="govuk-cookie-banner__message govuk-width-container">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                <h2 class="govuk-cookie-banner__heading govuk-heading-m">Cookies on this service</h2>
+
+                <div class="govuk-cookie-banner__content">
+                    <p class="govuk-body">We use some essential cookies to make this service work.</p>
+                </div>
+            </div>
+        </div>
+
+            <div class="govuk-button-group">
+                <button type="submit" asp-page="/Cookies" asp-page-handler="HideBanner" name="cookies" class="govuk-button" data-module="govuk-button" id="cookie-banner-hide-button">
+                    Hide this message
+                </button>
+                <a class="govuk-link" asp-page="/Cookies">View cookies</a>
+            </div>
+        </div>
+    </div>
+</form>
+}
