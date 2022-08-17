@@ -1,5 +1,6 @@
 using GovUk.Frontend.AspNetCore;
 
+using Jfi.Matomo.Demo.Models;
 using Jfi.Matomo.Demo.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,12 @@ builder.Services.AddSession(opt =>
 });
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISessionService, SessionService>();
+builder.Services.AddSingleton(_ =>
+{
+    var options = new MatomoOptions();
+    builder.Configuration.GetSection("Matomo").Bind(options);
+    return options;
+});
 
 var app = builder.Build();
 

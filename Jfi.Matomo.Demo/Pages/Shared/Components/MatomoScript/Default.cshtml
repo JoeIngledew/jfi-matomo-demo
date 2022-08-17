@@ -1,0 +1,67 @@
+﻿@model MatomoScriptComponentModel
+
+@if(Model.DoNotRender)
+{
+    <noscript></noscript>
+}
+else
+{
+    <script type="text/javascript">
+        var _paq = window._paq || [];
+        @if(Model.DisableCookieTimeoutExtension)
+        {
+            <text>
+                _paq.push([function() {
+                  var self = this;
+                  function getOriginalVisitorCookieTimeout() {
+                    var now = new Date(),nowTs = Math.round(now.getTime() / 1000),visitorInfo = self.getVisitorInfo();
+                    var createTs = parseInt(visitorInfo[2]);
+                    var cookieTimeout = 33696000;
+                    var originalTimeout = createTs + cookieTimeout - nowTs;
+                    return originalTimeout;
+                  }
+                  this.setVisitorCookieTimeout( getOriginalVisitorCookieTimeout() );
+                }]);
+            </text>
+        }
+        @if(Model.PrependDomainToTitle)
+        {
+            @: _paq.push(['setDocumentTitle', document.domain + '/' + document.title]);
+        }
+        @if(Model.ClientDoNotTrackDetection)
+        {
+            @: _paq.push(['setDoNotTrack', true]);
+        }
+        @if(Model.RequireConsent)
+        {
+            @: _paq.push(['requireConsent']);
+        }
+        @if(Model.RequireCookieConsent)
+        {
+            @: _paq.push(['requireCookieConsent']);
+        }
+        @if(Model.HasConsent)
+        {
+            @: _paq.push(['setConsentGiven']);
+        }
+        @if (Model.HasCookieConsent)
+        {
+            @: _paq.push(['setCookieConsentGiven']);
+        }
+
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+
+        (function() {
+            var u = '@Model.TrackerUrl';
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '@Model.SiteId']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.type = 'text/javascript'; g.async = true; g.defer = true; g.src = u + 'matomo.js'; s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+    @if (Model.IncludeNoScriptTrackingImg)
+    {
+        <noscript><p><img src="@Model.NoScriptTrackingImgSrc.ToString()" style="border:0;" alt="" /></p></noscript>
+    }
+}

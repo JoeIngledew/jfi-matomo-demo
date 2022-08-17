@@ -3,3 +3,73 @@
 @{
     ViewData["Title"] = "Cookies";
 }
+
+<h1 class="govuk-heading-l">Cookies</h1>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+            Cookies are small files saved on your phone, tablet or computer when you visit a website.
+        </p>
+        <p class="govuk-body">
+            We use cookies to make this site work. We'd also like to use analytics cookies so we can understand how you use the service and make improvements.
+        </p>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Essential cookies</h2>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+            Essential cookies keep your information secure while you use this service. We do not need to ask permission to use them.
+        </p>
+    </div>
+</div>
+
+<div>
+    Essential cookies would go here
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h2 class="govuk-heading-m">Analytics cookies (optional)</h2>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <p class="govuk-body">
+            Todo: Describe purpose
+        </p>
+    </div>
+</div>
+
+<div>
+    Table of analytics cookies would go here
+</div>
+
+<form method="post">
+    <govuk-radios asp-for="ConsentCookieValue">
+        <govuk-radios-fieldset>
+            <govuk-radios-fieldset-legend is-page-heading="true" class="govuk-fieldset__legend--l">
+                Do you want to accept analytics cookies?
+            </govuk-radios-fieldset-legend>
+
+            <govuk-radios-hint>
+                You can change this at any time
+            </govuk-radios-hint>
+            <govuk-radios-item value="accept">Yes</govuk-radios-item>
+            <govuk-radios-item value="reject">No</govuk-radios-item>
+        </govuk-radios-fieldset>
+    </govuk-radios>            
+    <div class="govuk-button-group">
+        <button type="submit" class="govuk-button" data-module="govuk-button">
+            Save preferences
+        </button>
+    </div>
+</form>
