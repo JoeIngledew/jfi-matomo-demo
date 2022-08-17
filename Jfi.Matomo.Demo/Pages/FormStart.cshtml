@@ -1,0 +1,45 @@
+﻿@page "/form/personal-details"
+@model Jfi.Matomo.Demo.Pages.FormStartModel
+@{
+    bool isError = !Model.ModelState.IsValid;
+    ViewData["Title"] = $"{(isError ? "Error - " : "")}About you";
+    string? fullNameError = Model.ModelState["FullName"]?.Errors?.FirstOrDefault()?.ErrorMessage;
+    string? emailError = Model.ModelState["Email"]?.Errors?.FirstOrDefault()?.ErrorMessage;
+}
+
+@section BackLink {
+    <govuk-back-link asp-page="Index" />
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">Personal details</h1>
+        
+        <form method="post" novalidate>
+            <govuk-input input-class="govuk-!-width-two-thirds" name="fullName"  id="@nameof(Model.FullName)" asp-for="FullName">
+                <govuk-input-label class="govuk-label--s">Full name</govuk-input-label>
+                @if (!string.IsNullOrEmpty(fullNameError))
+                {
+                    <govuk-input-error-message>@fullNameError</govuk-input-error-message>
+                }
+                
+            </govuk-input>
+            
+            <govuk-input input-class="govuk-!-width-two-thirds" name="email"  id="@nameof(Model.Email)" asp-for="Email" type="email" spellcheck="false" autocomplete="email">
+                <govuk-input-label class="govuk-label--s">Email address</govuk-input-label>
+                @if (!string.IsNullOrEmpty(emailError))
+                {
+                    <govuk-input-error-message>@emailError</govuk-input-error-message>
+                }
+                            
+            </govuk-input>
+            
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button" data-module="govuk-button">
+                    Continue
+                  </button>
+                <a class="govuk-link govuk-link--no-visited-state" asp-page="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

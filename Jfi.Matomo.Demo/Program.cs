@@ -1,7 +1,18 @@
+using GovUk.Frontend.AspNetCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddGovUkFrontend();
+builder.Services.AddSession(opt =>
+{
+    opt.Cookie.Name = ".Jfi.MatomoDemo.Session";
+    opt.Cookie.SameSite = SameSiteMode.Strict;
+    opt.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+    opt.IdleTimeout = TimeSpan.FromHours(20);
+    opt.Cookie.IsEssential = true;
+});
 
 var app = builder.Build();
 
@@ -19,6 +30,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseSession();
 
 app.MapRazorPages();
 

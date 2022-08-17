@@ -1,0 +1,40 @@
+﻿@page "/form/description"
+
+@model Jfi.Matomo.Demo.Pages.FormMiddleModel
+@{
+    bool isError = !Model.ModelState.IsValid;
+    ViewData["Title"] = $"{(isError ? "Error - " : "")}Description";
+    string? descError = Model.ModelState["Description"]?.Errors?.FirstOrDefault()?.ErrorMessage;
+}
+
+
+@section BackLink {
+    <govuk-back-link asp-page="Index" />
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form method="post" novalidate>
+            <govuk-textarea asp-for="Description" id="Description" rows="10" spellcheck="true">
+                <govuk-textarea-label is-page-heading="true">Add a description</govuk-textarea-label>
+                <govuk-textarea-hint>Any text</govuk-textarea-hint>
+                @if(!string.IsNullOrEmpty(descError))
+                {
+                    <govuk-textarea-error-message>
+                        @descError
+                    </govuk-textarea-error-message>
+                }
+                <govuk-textarea-value>
+                    @Model.Description
+                </govuk-textarea-value>
+            </govuk-textarea>
+            
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button" data-module="govuk-button">
+                    Complete form
+                  </button>
+                <a class="govuk-link govuk-link--no-visited-state" asp-page="Index">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
